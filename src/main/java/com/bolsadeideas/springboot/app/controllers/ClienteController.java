@@ -16,7 +16,7 @@ public class ClienteController {
 
 	@RequestMapping(value = "listar", method = RequestMethod.GET)
 	public String listar(Model model) {
-		model.addAttribute("titulo", "Listadop de clientes");
+		model.addAttribute("titulo", "Listado de clientes");
 		model.addAttribute("clientes", clienteDao.findAll());
 		return "listar";
 	}
