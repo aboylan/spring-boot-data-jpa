@@ -14,7 +14,7 @@
 						<li th:each="err: ${#fields.errors('*')}" th:text="${err}"></li>
 					</ul>
 				</div>
-				<form th:action="@{/form}" th:object="${cliente}" method="post">
+				<form th:action="@{/form}" th:object="${cliente}" method="post" enctype="mulipart/form-data">
 					<div class="form-group row">
 						<lable class="col-sm-2 col-form-label">Nombre</lable>
 						<div class="col-sm-6">
