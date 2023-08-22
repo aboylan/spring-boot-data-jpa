@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -63,5 +64,16 @@ public class UploadFileServiceImpl implements IUploadFileService {
 
 	public Path getPath(String filename) {
 		return Paths.get(UPLOADS_FOLDER).resolve(filename).toAbsolutePath();
+	}
+
+	@Override
+	public void deleteAll() {
+		FileSystemUtils.deleteRecursively(Paths.get(UPLOADS_FOLDER).toFile());
+	}
+
+	@Override
+	public void init() throws IOException {
+		// TODO Auto-generated method stub
+		Files.createDirectory(Paths.get(UPLOADS_FOLDER));
 	}
 }
