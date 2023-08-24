@@ -1,15 +1,20 @@
 package com.bolsadeideas.springboot.app.models.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -35,20 +40,27 @@ public class Factura implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Cliente cliente;
 
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "factrura_id")
+	private List<ItemFactura> items;
+
 	@PrePersist
 	public void prePersist() {
 		createAt = new Date();
 	}
 
 	public Factura() {
+		this.items = new ArrayList<ItemFactura>();
 	}
 
-	public Factura(Long id, String descripcion, String observacion, Date createAt, Cliente cliente) {
+	public Factura(Long id, String descripcion, String observacion, Date createAt, Cliente cliente,
+			List<ItemFactura> items) {
 		this.id = id;
 		this.descripcion = descripcion;
 		this.observacion = observacion;
 		this.createAt = createAt;
 		this.cliente = cliente;
+		this.items = items;
 	}
 
 	public Long getId() {
@@ -91,4 +103,7 @@ public class Factura implements Serializable {
 		this.cliente = cliente;
 	}
 
+	public void addItemFactura(ItemFactura item) {
+		this.items.add(item);
+	}
 }
