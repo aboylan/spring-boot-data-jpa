@@ -41,7 +41,7 @@ public class Factura implements Serializable {
 	private Cliente cliente;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "factrura_id")
+	@JoinColumn(name = "factura_id")
 	private List<ItemFactura> items;
 
 	@PrePersist
@@ -108,6 +108,7 @@ public class Factura implements Serializable {
 	}
 
 	public Double getTotal() {
+		System.out.println("En total.....");
 		Double total = 0.0;
 
 		int size = items.size();

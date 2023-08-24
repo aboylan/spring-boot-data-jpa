@@ -12,7 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "facturas_item")
+@Table(name = "facturas_items")
 public class ItemFactura implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -40,6 +40,7 @@ public class ItemFactura implements Serializable {
 	}
 
 	public Double calcularImporte() {
+		System.out.println("Calcuylar importe ....");
 		return cantidad.doubleValue() * producto.getPrecio();
 	}
 
