@@ -40,7 +40,7 @@ public class ItemFactura implements Serializable {
 	}
 
 	public Double calcularImporte() {
-		System.out.println("Calcuylar importe ....");
+		System.out.println("Calcular importe ....");
 		return cantidad.doubleValue() * producto.getPrecio();
 	}
 
