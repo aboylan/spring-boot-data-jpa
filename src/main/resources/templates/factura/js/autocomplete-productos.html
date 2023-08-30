@@ -16,7 +16,7 @@
 					success: function(data){
 						response($.map(data, function(item){
 							return {
-								vale: item.id,
+								value: item.id,
 								label: item.nombre,
 								precio: item.precio
 							}
@@ -46,21 +46,24 @@
 	});
 	var itemsHelper = {
 		calcularImporte: function(id, precio, cantidad){
-			$("[id='total_importe_" + id + "']").text(parseInt(precio) * parseInt(cantidad));
+			$("#total_importe_" + id).text(parseInt(precio) * parseInt(cantidad));
 		},
 		hasProducto: function(id) {
 			var resultado = false;
 			$('input[name="item_id[]"').each(function(){
-				if(id == $(this).val()){
+				if(parseInt(id) == parseInt($(this).val())){
 					resultado = true;
 				}
 			});
 			return resultado;
 		},
 		incrementaCantidad: function(id, precio){
-			var cantidad = $("[id='cantidad_" + id + "']").val() ? parseInt($("[id='cantidad_" + id + "']").val()) : 0;
-			$("[id='cantidad_" + id + "']").val(++cantidad);
+			var cantidad = $("#cantidad_" + id).val() ? parseInt($("#cantidad_" + id).val()) : 0;
+			$("#cantidad_" + id).val(++cantidad);
 			this.calcularImporte(id, precio, cantidad);
+		},
+		eliminarLineaFactura: function(id) {
+			$("#row_" + id).remove();
 		}
 	};
 </script>
