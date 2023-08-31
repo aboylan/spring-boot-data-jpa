@@ -105,6 +105,14 @@ public class Factura implements Serializable {
 		this.cliente = cliente;
 	}
 
+	public List<ItemFactura> getItems() {
+		return items;
+	}
+
+	public void setItems(List<ItemFactura> items) {
+		this.items = items;
+	}
+
 	public void addItemFactura(ItemFactura item) {
 		this.items.add(item);
 	}

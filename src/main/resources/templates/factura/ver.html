@@ -31,6 +31,35 @@
 					<li class="list-group-item"
 						th:text="'Descripcion: ' + ${factura.createAt}"></li>
 				</ul>
+
+				<div class="alert alert-info my-4"
+					th:if="${#lists.isEmpty(factura.items)}"
+					th:text="'No hay lineas para la factura ' + ${factura.descripcion}"></div>
+
+				<table th:if="${not #lists.isEmpty(factura.items)}"
+					class="table table-striped table-hover table-bordered my-3">
+					<thead>
+						<tr>
+							<th>Producto</th>
+							<th>Precio</th>
+							<th>Cantidad</th>
+							<th>Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="linea: ${factura.items}">
+							<td th:text="${linea.producto.nombre}"></td>
+							<td th:text="${linea.producto.precio}"></td>
+							<td th:text="${linea.cantidad}"></td>
+							<td th:text="${linea.calcularImporte()}"></td>
+						</tr>
+					</tbody>
+				</table>
+
+				<h5 class="float-end">
+					Gran Total <span th:text="${factura.total}"
+						class="badge bg-secondary"></span>
+				</h5>
 			</div>
 		</div>
 	</div>
