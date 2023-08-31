@@ -120,4 +120,10 @@ public class Cliente implements Serializable {
 	public void addFactura(Factura factura) {
 		this.facturas.add(factura);
 	}
+
+	@Override
+	public String toString() {
+		return nombre + " " + apellido;
+	}
+
 }

@@ -49,7 +49,7 @@ public class FacturaController {
 		model.addAttribute("factura", factura);
 		model.addAttribute("titulo", "Factura: ".concat(factura.getDescripcion()));
 
-		return "factrura/ver";
+		return "factura/ver";
 	}
 
 	@GetMapping("/form/{clienteId}")
