@@ -60,6 +60,19 @@
 					Gran Total <span th:text="${factura.total}"
 						class="badge bg-secondary"></span>
 				</h5>
+
+				<div class="card border-info mb-4" style="max-width: 20rem;">
+					<div class="card-header">Observaciones</div>
+					<div class="card-body">
+						<p class="card-text" th:text="${factura.observacion}"
+							th:if="${not #strings.isEmpty(factura.observacion)}"></p>
+						<h4 class="card-title" th:text="'No tiene observaciones'"
+							th:if="${#strings.isEmpty(factura.observacion)}"></h4>
+					</div>
+				</div>
+
+				<a th:href="@{'/ver/' + ${factura.cliente.id}}"
+					class="btn btn-light btn-xs">&laquo; volver</a>
 			</div>
 		</div>
 	</div>
