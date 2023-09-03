@@ -14,7 +14,7 @@ public class LoginController {
 	public String login(Model model, Principal principal, RedirectAttributes flash) {
 
 		if (principal != null) {
-			flash.addFlashAttribute("info", "Ýa ha iniciado sesion anteriormente");
+			flash.addFlashAttribute("info", "Ya ha iniciado sesion anteriormente");
 			return "redirect:/";
 		}
 
