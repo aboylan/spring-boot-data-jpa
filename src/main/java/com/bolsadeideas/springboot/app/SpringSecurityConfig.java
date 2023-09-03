@@ -55,7 +55,6 @@ public class SpringSecurityConfig {
 			.requestMatchers(mvc.pattern("/eliminar/**")).hasAnyRole("ADMIN")
 			.requestMatchers(mvc.pattern("/factura/**")).hasAnyRole("ADMIN")
 			.anyRequest().authenticated()
-			
 		);
 		
 		http.formLogin(form -> form.loginPage("/login").permitAll());
