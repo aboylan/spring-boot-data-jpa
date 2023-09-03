@@ -58,7 +58,7 @@ public class SpringSecurityConfig {
 			
 		);
 		
-		http.formLogin(form -> form.permitAll());
+		http.formLogin(form -> form.loginPage("/login").permitAll());
 		http.logout(logout -> logout.permitAll());
 
 		return http.build();
