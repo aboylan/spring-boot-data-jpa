@@ -9,7 +9,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 @Configuration
@@ -34,22 +33,35 @@ public class SpringSecurityConfig {
 	}
 
 	@Bean
-	SecurityFilterChain filterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
+	MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector) {
+		return new MvcRequestMatcher.Builder(introspector);
+	}
 
-		MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
+	@Bean
+	SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
 
-		http.authorizeHttpRequests((authz) -> {
-			authz.requestMatchers(mvcMatcherBuilder.pattern("/"), new AntPathRequestMatcher("/css/**"),
-					new AntPathRequestMatcher("/js/**"), new AntPathRequestMatcher("/images/**"),
-					mvcMatcherBuilder.pattern("/listar")).permitAll()
-					.requestMatchers(mvcMatcherBuilder.pattern("/ver/**")).hasAnyRole("USER")
-					.requestMatchers(mvcMatcherBuilder.pattern("/uploads/**")).hasAnyRole("USER")
-					.requestMatchers(mvcMatcherBuilder.pattern("/form/**")).hasAnyRole("ADMIN")
-					.requestMatchers(mvcMatcherBuilder.pattern("/eliminar/**")).hasAnyRole("ADMIN")
-					.requestMatchers(mvcMatcherBuilder.pattern("/factura/**")).hasAnyRole("ADMIN").anyRequest()
-					.authenticated();
-		});
+		http
+		.authorizeHttpRequests((authorize) -> 
+			authorize.requestMatchers(
+					mvc.pattern("/"),
+					mvc.pattern("/css/**"),
+					mvc.pattern("/js/**"),
+					mvc.pattern("/images/**"),
+					mvc.pattern("/listar")
+			).permitAll()
+			.requestMatchers(mvc.pattern("/ver/**")).hasAnyRole("USER")
+			.requestMatchers(mvc.pattern("/uploads/**")).hasAnyRole("USER")
+			.requestMatchers(mvc.pattern("/form/**")).hasAnyRole("ADMIN")
+			.requestMatchers(mvc.pattern("/eliminar/**")).hasAnyRole("ADMIN")
+			.requestMatchers(mvc.pattern("/factura/**")).hasAnyRole("ADMIN")
+			.anyRequest().authenticated()
+			
+		);
+		
+		http.formLogin(form -> form.permitAll());
+		http.logout(logout -> logout.permitAll());
 
 		return http.build();
 	}
+	
 }
