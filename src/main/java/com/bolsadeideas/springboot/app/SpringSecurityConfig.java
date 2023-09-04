@@ -1,5 +1,6 @@
 package com.bolsadeideas.springboot.app;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,8 +12,13 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
+import com.bolsadeideas.springboot.app.auth.handler.LoginSuccessHandler;
+
 @Configuration
 public class SpringSecurityConfig {
+
+	@Autowired
+	private LoginSuccessHandler successHandler;
 
 	@Bean
 	static BCryptPasswordEncoder passwordEncoder() {
@@ -48,7 +54,7 @@ public class SpringSecurityConfig {
 				.hasAnyRole("ADMIN").requestMatchers(mvc.pattern("/eliminar/**")).hasAnyRole("ADMIN")
 				.requestMatchers(mvc.pattern("/factura/**")).hasAnyRole("ADMIN").anyRequest().authenticated());
 
-		http.formLogin(form -> form.loginPage("/login").permitAll());
+		http.formLogin(form -> form.successHandler(successHandler).loginPage("/login").permitAll());
 		http.logout(logout -> logout.permitAll());
 		http.exceptionHandling(sec -> sec.accessDeniedPage("/error_403"));
 
