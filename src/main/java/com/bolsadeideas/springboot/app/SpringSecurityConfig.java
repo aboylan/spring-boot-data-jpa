@@ -40,27 +40,19 @@ public class SpringSecurityConfig {
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
 
-		http
-		.authorizeHttpRequests((authorize) -> 
-			authorize.requestMatchers(
-					mvc.pattern("/"),
-					mvc.pattern("/css/**"),
-					mvc.pattern("/js/**"),
-					mvc.pattern("/images/**"),
-					mvc.pattern("/listar")
-			).permitAll()
-			.requestMatchers(mvc.pattern("/ver/**")).hasAnyRole("USER")
-			.requestMatchers(mvc.pattern("/uploads/**")).hasAnyRole("USER")
-			.requestMatchers(mvc.pattern("/form/**")).hasAnyRole("ADMIN")
-			.requestMatchers(mvc.pattern("/eliminar/**")).hasAnyRole("ADMIN")
-			.requestMatchers(mvc.pattern("/factura/**")).hasAnyRole("ADMIN")
-			.anyRequest().authenticated()
-		);
-		
+		http.authorizeHttpRequests((authorize) -> authorize
+				.requestMatchers(mvc.pattern("/"), mvc.pattern("/css/**"), mvc.pattern("/js/**"),
+						mvc.pattern("/images/**"), mvc.pattern("/listar"))
+				.permitAll().requestMatchers(mvc.pattern("/ver/**")).hasAnyRole("USER")
+				.requestMatchers(mvc.pattern("/uploads/**")).hasAnyRole("USER").requestMatchers(mvc.pattern("/form/**"))
+				.hasAnyRole("ADMIN").requestMatchers(mvc.pattern("/eliminar/**")).hasAnyRole("ADMIN")
+				.requestMatchers(mvc.pattern("/factura/**")).hasAnyRole("ADMIN").anyRequest().authenticated());
+
 		http.formLogin(form -> form.loginPage("/login").permitAll());
 		http.logout(logout -> logout.permitAll());
+		http.exceptionHandling(sec -> sec.accessDeniedPage("/error_403"));
 
 		return http.build();
 	}
-	
+
 }
