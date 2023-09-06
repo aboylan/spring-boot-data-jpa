@@ -1,8 +1,12 @@
 package com.bolsadeideas.springboot.app;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -23,9 +27,12 @@ public class SpringSecurityConfig {
 	private LoginSuccessHandler successHandler;
 
 	@Autowired
-	BCryptPasswordEncoder passwordEncoder;
+	private BCryptPasswordEncoder passwordEncoder;
 
-	@Bean
+	@Autowired
+	private DataSource dataSource;
+
+	/*@Bean
 	UserDetailsService userDetailsService() throws Exception {
 
 		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
@@ -36,8 +43,22 @@ public class SpringSecurityConfig {
 		manager.createUser(User.withUsername("user").password(passwordEncoder.encode("user")).roles("USER").build());
 
 		return manager;
-	}
+	}*/
 
+	@Bean
+	AuthenticationManager authManager(HttpSecurity http) throws Exception {
+		
+		AuthenticationManagerBuilder build = http.getSharedObject(AuthenticationManagerBuilder.class);
+		
+		build.jdbcAuthentication()
+			.dataSource(dataSource)
+			.passwordEncoder(passwordEncoder)
+			.usersByUsernameQuery("select username, password, enabled from users where username=?")
+			.authoritiesByUsernameQuery("select u.username, a.authority from authorities a inner join users u on (a.user_id=u.id) where u.username=?");
+		
+		return build.build();
+	}
+	
 	@Bean
 	MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector) {
 		return new MvcRequestMatcher.Builder(introspector);
