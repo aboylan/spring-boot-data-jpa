@@ -22,10 +22,8 @@ public class SpringSecurityConfig {
 	@Autowired
 	private LoginSuccessHandler successHandler;
 
-	@Bean
-	static BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder;
 
 	@Bean
 	UserDetailsService userDetailsService() throws Exception {
@@ -33,9 +31,9 @@ public class SpringSecurityConfig {
 		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
 
 		manager.createUser(
-				User.withUsername("admin").password(passwordEncoder().encode("admin")).roles("ADMIN", "USER").build());
+				User.withUsername("admin").password(passwordEncoder.encode("admin")).roles("ADMIN", "USER").build());
 
-		manager.createUser(User.withUsername("user").password(passwordEncoder().encode("user")).roles("USER").build());
+		manager.createUser(User.withUsername("user").password(passwordEncoder.encode("user")).roles("USER").build());
 
 		return manager;
 	}
