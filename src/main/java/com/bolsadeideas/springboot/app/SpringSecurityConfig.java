@@ -69,7 +69,7 @@ public class SpringSecurityConfig {
 
 		http.authorizeHttpRequests((authorize) -> authorize
 				.requestMatchers(mvc.pattern("/"), mvc.pattern("/css/**"), mvc.pattern("/js/**"),
-						mvc.pattern("/images/**"), mvc.pattern("/listar"))
+						mvc.pattern("/images/**"), mvc.pattern("/listar"), mvc.pattern("/locale"))
 				.permitAll()
 				/* .requestMatchers(mvc.pattern("/ver/**")).hasAnyRole("USER") */
 				/* .requestMatchers(mvc.pattern("/uploads/**")).hasAnyRole("USER") */
