@@ -53,6 +53,18 @@
 					<a class="btn btn-outline-success mx-1" th:href="@{/locale(lang=es_ES)}">ES</a>
 					<a class="btn btn-outline-success mx-1" th:href="@{/locale(lang=en_US)}">US</a>
 					<a class="btn btn-outline-success mx-1" th:href="@{/locale(lang=de_DE)}">DE</a>
+					<div class="dropdown mx-2">
+						<a class="btn btn-primary dropdown-toggle" href="#"
+							role="button" id="dropdownLenguaje" data-bs-toggle="dropdown" 
+							aria-expanded="false">
+							<span th:text="#{text.locale.language}"></span>
+						</a>
+					 	<ul class="dropdown-menu">
+					    	<li><a class="dropdown-item" th:href="@{/locale(lang=es_ES)}" th:text="#{text.locale.es}">ES</a></li>
+					    	<li><a class="dropdown-item" th:href="@{/locale(lang=en_US)}" th:text="#{text.locale.en}">EN</a></li>
+					    	<li><a class="dropdown-item" th:href="@{/locale(lang=de_DE)}" th:text="#{text.locale.de}">DE</a></li>
+					  	</ul>
+					</div>
 				</div>
 			</div>
 		</nav>
