@@ -12,9 +12,11 @@
 
 				<h4 class="card-title">
 					<a th:href="@{'/ver/' + ${factura.cliente.id}}"
-						class="btn btn-light btn-xs">&laquo; volver</a> <a
-						th:href="@{'/factura/ver/' + ${factura.id}(format=pdf)}"
-						class="btn btn-danger btn-xs float-end">PDF</a>
+						class="btn btn-light btn-xs">&laquo; volver</a>
+					<a th:href="@{'/factura/ver/' + ${factura.id}(format=pdf)}"
+						class="btn btn-danger btn-xs float-end mx-2">PDF</a>
+					<a th:href="@{'/factura/ver/' + ${factura.id}(format=xlsx)}"
+						class="btn btn-success btn-xs float-end">XLS</a>
 				</h4>
 
 				<ul class="list-group my-2">
