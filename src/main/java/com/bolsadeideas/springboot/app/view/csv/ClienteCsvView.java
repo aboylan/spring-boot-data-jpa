@@ -14,7 +14,7 @@ import com.bolsadeideas.springboot.app.models.entity.Cliente;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@Component("listar")
+@Component("listar.csv")
 public class ClienteCsvView extends AbstractView {
 
 	public ClienteCsvView() {
