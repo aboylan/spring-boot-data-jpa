@@ -1,6 +1,7 @@
 package com.bolsadeideas.springboot.app;
 
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -16,6 +17,10 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
 
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
@@ -61,9 +66,9 @@ public class MvcConfig implements WebMvcConfigurer {
 	}
 
 	@Bean
-	Jaxb2Marshaller jsxJaxb2Marshaller() {
-		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-		marshaller.setClassesToBeBound(new Class[] { com.bolsadeideas.springboot.app.view.xml.ClienteList.class });
-		return marshaller;
+	Jaxb2Marshaller marshaller() {
+		Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
+		jaxb2Marshaller.setClassesToBeBound(new Class[] { com.bolsadeideas.springboot.app.view.xml.ClienteList.class });
+		return jaxb2Marshaller;
 	}
 }

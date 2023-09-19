@@ -4,14 +4,17 @@ import java.util.List;
 
 import com.bolsadeideas.springboot.app.models.entity.Cliente;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="clientes")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name="clientesList")
 public class ClienteList {
 
 	@XmlElement(name="cliente")
-	public List<Cliente> clientes;
+	private List<Cliente> clientes;
 
 	public ClienteList() {
 	}

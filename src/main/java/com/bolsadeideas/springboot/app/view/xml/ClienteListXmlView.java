@@ -21,7 +21,7 @@ public class ClienteListXmlView extends MarshallingView {
 		super(marshaller);
 	}
 
-	@SuppressWarnings("unused")
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
